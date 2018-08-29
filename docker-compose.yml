@@ -3,18 +3,28 @@ version: "3"
 services:
     mongo3:
         image: mongo:3.2
+        entrypoint: [ "/usr/bin/mongod", "--replSet", "rs", "--journal", "--smallfiles", "--rest" ]
         ports:
             - "27022:27017"
         restart: always
 
     mongo2:
         image: mongo:3.2
+        entrypoint: [ "/usr/bin/mongod", "--replSet", "rs", "--journal", "--smallfiles", "--rest" ]
         ports:
             - "27021:27017"
         restart: always
 
     mongo1:
         image: mongo:3.2
+        entrypoint: [ "/usr/bin/mongod", "--replSet", "rs", "--journal", "--smallfiles", "--rest" ]
         ports:
             - "27020:27017"
         restart: always
+
+    mongosetup:
+        image: mongo:3.2
+        volumes:
+            - "./scripts:/scripts"
+        entrypoint: [ "/scripts/setup.sh" ]
+
