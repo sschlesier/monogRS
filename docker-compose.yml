@@ -23,8 +23,5 @@ services:
         restart: always
 
     mongosetup:
-        image: mongo:3.2
-        volumes:
-            - "./scripts:/scripts"
-        entrypoint: [ "/scripts/setup.sh" ]
-
+        image: mongosetup
+        build: ./mongosetup
