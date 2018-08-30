@@ -1,24 +1,36 @@
 version: "3"
 
+# This file will create a mongo cluster with nodes at
+# mongo1:27020
+# mongo2:27021
+# mongo3:27022
+#
+# you need to add the following entries to your /etc/hosts file
+# 127.0.0.1     mongo1
+# 127.0.0.1     mongo2
+# 127.0.0.1     mongo3
+
 services:
-    mongo3:
-        image: mongonode
-        build: ./mongonode
+    mongo1:
+        image: mongo:3.2
         ports:
-            - "27022:27017"
+            - "27020:27020"
         restart: always
+        command: [ "/usr/bin/mongod", "--port", "27020", "--replSet", "rs", "--journal", "--smallfiles", "--rest" ]
 
     mongo2:
-        image: mongonode
+        image: mongo:3.2
         ports:
-            - "27021:27017"
+            - "27021:27021"
         restart: always
+        command: [ "/usr/bin/mongod", "--port", "27021", "--replSet", "rs", "--journal", "--smallfiles", "--rest" ]
 
-    mongo1:
-        image: mongonode
+    mongo3:
+        image: mongo:3.2
         ports:
-            - "27020:27017"
+            - "27022:27022"
         restart: always
+        command: [ "/usr/bin/mongod", "--port", "27022", "--replSet", "rs", "--journal", "--smallfiles", "--rest" ]
 
     mongosetup:
         image: mongosetup
